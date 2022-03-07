@@ -148,3 +148,17 @@ const getTotalPlayCount = (trackPlayCount: TrackPlayCount): number => {
 
   return sum;
 };
+
+/*
+ * Transforms an array of {timestmp, {[trackName]: [trackPlayCount]}}
+ * objects to the desired charting library output:
+ * {x: timestmp, y: [total play count], tooltip: formatted_tooltip}
+ */
+const getChartDataFromTrackPlayCountWithDate = (
+  trackData: Array<TrackPlayCountWithDate>
+): ChartData =>
+  trackData.map(({ timestp, trackPlayCount }) => ({
+    x: timestp,
+    y: getTotalPlayCount(trackPlayCount),
+    tooltip: getTooltip(trackPlayCount),
+  }));
