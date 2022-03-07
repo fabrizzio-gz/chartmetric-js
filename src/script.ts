@@ -177,3 +177,16 @@ const processApiData = (response: ApiResponse): ChartData | void => {
 
 const response = fetchData();
 console.log(processApiData(response));
+
+// Exports used for testing
+export {
+  fetchData,
+  flattenTracks,
+  sortTracks,
+  getTrackPlayCountByDate,
+  getTooltip,
+  getTotalPlayCount,
+  getChartDataFromTrackPlayCountWithDate,
+  processApiData,
+  TrackPlayCountWithDate,
+};
