@@ -67,3 +67,15 @@ const flattenTracks = (response: ApiResponse): Array<Track> => {
   );
   return tracks;
 };
+
+/*
+ * Sort tracks by timestamp
+ */
+const sortTracks = (tracks: Array<Track>): Array<Track> => {
+  const sortedTracks = tracks.slice();
+  sortedTracks.sort(
+    (trackA, trackB) =>
+      new Date(trackA.timestp).getTime() - new Date(trackB.timestp).getTime()
+  );
+  return sortedTracks;
+};
