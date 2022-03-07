@@ -162,3 +162,18 @@ const getChartDataFromTrackPlayCountWithDate = (
     y: getTotalPlayCount(trackPlayCount),
     tooltip: getTooltip(trackPlayCount),
   }));
+
+/*
+ * Given an API response array, return data in the required chart library
+ * format.
+ */
+const processApiData = (response: ApiResponse): ChartData | void => {
+  const tracks = flattenTracks(response);
+  const sortedTracks = sortTracks(tracks);
+  const trackPlayCountByDate = getTrackPlayCountByDate(sortedTracks);
+  const data = getChartDataFromTrackPlayCountWithDate(trackPlayCountByDate);
+  return data;
+};
+
+const response = fetchData();
+console.log(processApiData(response));
