@@ -55,3 +55,15 @@ const fetchData = (): ApiResponse => {
     },
   ];
 };
+
+/*
+ * Gathers all tracks in API response into a single array
+ * and resturns it.
+ */
+const flattenTracks = (response: ApiResponse): Array<Track> => {
+  let tracks: Array<Track> = [];
+  response.forEach((radioStationData) =>
+    tracks.concat(radioStationData.tracks)
+  );
+  return tracks;
+};
