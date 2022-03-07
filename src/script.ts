@@ -137,3 +137,14 @@ const getTooltip = (trackPlayCount: TrackPlayCount): ToolTipString => {
 
   return trackStrings.join(", ");
 };
+
+/*
+ * Given an object {[trackName]: [playCount]} returns the play count
+ * of all tracks combined.
+ */
+const getTotalPlayCount = (trackPlayCount: TrackPlayCount): number => {
+  let sum = 0;
+  for (const trackName in trackPlayCount) sum += trackPlayCount[trackName];
+
+  return sum;
+};
