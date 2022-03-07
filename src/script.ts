@@ -79,3 +79,49 @@ const sortTracks = (tracks: Array<Track>): Array<Track> => {
   );
   return sortedTracks;
 };
+
+// Helper type declarations for mediate data
+interface TrackPlayCount {
+  [trackName: string]: number;
+}
+
+interface TrackPlayCountWithDate {
+  timestp: string;
+  trackPlayCount: TrackPlayCount;
+}
+
+/*
+ * Given an array of SORTED BY TIMESTAMP tracks: {timestmp, trackName}, count how
+ * many times each track was played at each timestmp.
+ * Returns an array of objects: {timstmp, trackPlayCount}, where timestmp represents
+ * a unique date and trackPlayCount is an object of the form {[trackName]: [count]},
+ * where [count] is the number of times [trackName] was played at date [timestmp].
+ */
+const getTrackPlayCountByDate = (
+  tracks: Array<Track>
+): Array<TrackPlayCountWithDate> =>
+  tracks.reduce(
+    (
+      prevTracksByDate: Array<TrackPlayCountWithDate>,
+      track: Track
+    ): Array<TrackPlayCountWithDate> => {
+      const n = prevTracksByDate.length;
+      const prevDate = n !== 0 ? prevTracksByDate[n - 1].timestp : "";
+      const currDate = track.timestp;
+      if (n === 0 || prevDate !== currDate) {
+        // Add track count for current timestamp
+        prevTracksByDate.push({
+          timestp: track.timestp,
+          trackPlayCount: { [track.trackName]: 1 },
+        });
+        return prevTracksByDate;
+      }
+      // prevDate === currDate
+      const currDateTrackPlayCount = prevTracksByDate[n - 1].trackPlayCount;
+      const trackCount = currDateTrackPlayCount[track.trackName];
+      // Update track count for current track
+      currDateTrackPlayCount[track.trackName] = trackCount ? trackCount + 1 : 1;
+      return prevTracksByDate;
+    },
+    []
+  );
