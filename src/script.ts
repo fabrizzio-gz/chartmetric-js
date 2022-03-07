@@ -62,8 +62,8 @@ const fetchData = (): ApiResponse => {
  */
 const flattenTracks = (response: ApiResponse): Array<Track> => {
   let tracks: Array<Track> = [];
-  response.forEach((radioStationData) =>
-    tracks.concat(radioStationData.tracks)
+  response.forEach(
+    (radioStationData) => (tracks = tracks.concat(radioStationData.tracks))
   );
   return tracks;
 };
