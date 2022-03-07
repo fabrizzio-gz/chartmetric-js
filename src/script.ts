@@ -125,3 +125,15 @@ const getTrackPlayCountByDate = (
     },
     []
   );
+
+/*
+ * Given an object {[trackName]: [playCount]} returns a tooltip string
+ * of the form: "trackName1 (playCount1), trackName2 (playCount2), ..."
+ */
+const getTooltip = (trackPlayCount: TrackPlayCount): ToolTipString => {
+  let trackStrings = [];
+  for (const trackName in trackPlayCount)
+    trackStrings.push(`${trackName} (${trackPlayCount[trackName]})`);
+
+  return trackStrings.join(", ");
+};
