@@ -1,0 +1,23 @@
+{
+  "name": "chartmetric-js",
+  "version": "1.0.0",
+  "description": "JS Data Manipulation",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node build/script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabrizzio-gz/chartmetric-js.git"
+  },
+  "author": "fabrizzio-gz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fabrizzio-gz/chartmetric-js/issues"
+  },
+  "homepage": "https://github.com/fabrizzio-gz/chartmetric-js#readme",
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  }
+}
