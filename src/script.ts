@@ -97,7 +97,7 @@ interface TrackPlayCountWithDate {
  * a unique date and trackPlayCount is an object of the form {[trackName]: [count]},
  * where [count] is the number of times [trackName] was played at date [timestmp].
  */
-const getTrackPlayCountByDate = (
+const groupTracksByDate = (
   tracks: Array<Track>
 ): Array<TrackPlayCountWithDate> =>
   tracks.reduce(
@@ -154,7 +154,7 @@ const getTotalPlayCount = (trackPlayCount: TrackPlayCount): number => {
  * objects to the desired charting library output:
  * {x: timestmp, y: [total play count], tooltip: formatted_tooltip}
  */
-const getChartDataFromTrackPlayCountWithDate = (
+const getChartDataFromTracksByDate = (
   trackData: Array<TrackPlayCountWithDate>
 ): ChartData =>
   trackData.map(({ timestp, trackPlayCount }) => ({
@@ -170,8 +170,8 @@ const getChartDataFromTrackPlayCountWithDate = (
 const processApiData = (response: ApiResponse): ChartData | void => {
   const tracks = flattenTracks(response);
   const sortedTracks = sortTracks(tracks);
-  const trackPlayCountByDate = getTrackPlayCountByDate(sortedTracks);
-  const data = getChartDataFromTrackPlayCountWithDate(trackPlayCountByDate);
+  const tracksByDate = groupTracksByDate(sortedTracks);
+  const data = getChartDataFromTracksByDate(tracksByDate);
   return data;
 };
 
@@ -183,10 +183,10 @@ export {
   fetchData,
   flattenTracks,
   sortTracks,
-  getTrackPlayCountByDate,
+  groupTracksByDate,
   getTooltip,
   getTotalPlayCount,
-  getChartDataFromTrackPlayCountWithDate,
+  getChartDataFromTracksByDate,
   processApiData,
   TrackPlayCountWithDate,
 };
