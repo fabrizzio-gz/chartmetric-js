@@ -2,6 +2,7 @@ import {
   fetchData,
   flattenTracks,
   getTooltip,
+  getTotalPlayCount,
   groupTracksByDate,
   sortTracks,
   TrackPlayCountWithDate,
@@ -179,6 +180,37 @@ describe("get tooltip", () => {
     ["test data (3)", tracksByDate[2].trackPlayCount, thirdTooltip],
   ])("returns expected result (%s)", (_string, input, expected) => {
     const result = getTooltip(input);
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("get total play count", () => {
+  const tracksByDate: Array<TrackPlayCountWithDate> = [
+    { timestp: "2021-04-07", trackPlayCount: { "Captain Hook": 100 } },
+    {
+      timestp: "2021-04-08",
+      trackPlayCount: { Peaches: 10, Savage: 20, "Captain Hook": 30 },
+    },
+    {
+      timestp: "2021-04-09",
+      trackPlayCount: {
+        Savage: 0,
+        "Savage (feat. Beyonce)": 0,
+        "Captain Hook": 0,
+      },
+    },
+  ];
+
+  const firstTotalCount = 100;
+  const secondTotalCount = 60;
+  const thirdTotalCount = 0;
+
+  test.each([
+    ["test data (1)", tracksByDate[0].trackPlayCount, firstTotalCount],
+    ["test data (2)", tracksByDate[1].trackPlayCount, secondTotalCount],
+    ["test data (3)", tracksByDate[2].trackPlayCount, thirdTotalCount],
+  ])("returns expected result (%s)", (_string, input, expected) => {
+    const result = getTotalPlayCount(input);
     expect(result).toEqual(expected);
   });
 });
