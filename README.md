@@ -32,3 +32,7 @@ $ npm run test
 
 - TypeScript.
 - Jest.
+
+## Other exercises
+
+- [CSS exercise](https://github.com/fabrizzio-gz/chartmetric-css).
