@@ -4,6 +4,7 @@ import {
   getTooltip,
   getTotalPlayCount,
   groupTracksByDate,
+  processApiData,
   sortTracks,
   TrackPlayCountWithDate,
 } from "./script";
@@ -211,6 +212,31 @@ describe("get total play count", () => {
     ["test data (3)", tracksByDate[2].trackPlayCount, thirdTotalCount],
   ])("returns expected result (%s)", (_string, input, expected) => {
     const result = getTotalPlayCount(input);
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("Process API data", () => {
+  test("resturns expected result", () => {
+    const input = fetchData();
+    const expected = [
+      {
+        x: "2021-04-07",
+        y: 1,
+        tooltip: "Captain Hook (1)",
+      },
+      {
+        x: "2021-04-08",
+        y: 5,
+        tooltip: "Peaches (1), Savage (3), Captain Hook (1)",
+      },
+      {
+        x: "2021-04-09",
+        y: 3,
+        tooltip: "Savage (1), Savage (feat. Beyonce) (1), Captain Hook (1)",
+      },
+    ];
+    const result = processApiData(input);
     expect(result).toEqual(expected);
   });
 });
