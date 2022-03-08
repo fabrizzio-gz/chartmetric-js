@@ -4,23 +4,39 @@ Solution to JS data manipulation [exercise](docs/instructions.md).
 
 ## Solution notes
 
-It was assumed that the API response data is always valid. In particular, it's assumed, without verification, that the `tmpstp` property values are valid dates in `YYYY-MM-DD` format.
+It's assumed that the `tmpstp` property values of the API response are always valid string dates in `YYYY-MM-DD` format.
+
+## Instructions
+
+To execute the script, clone this repo and launch `build/script.js`.
+
+```bash
+$ node build/script.js
+```
+
+Or:
+
+```
+$ npm run start
+```
 
 ## Installation
 
-Clone repo and install dependencies.
+If required, the script can be transpiled from source TypeScript code present in `src/`.
+
+Install dependencies.
 
 ```bash
 $ npm install
 ```
 
-Execute code script with:
+Transpile with:
 
 ```bash
-$ npm run start
+$ npm run build
 ```
 
-Before the exection, `ts` code present in `src/` will be transpiled to `js` and written to `build/`.
+Transpiled code will be written to `build/`.
 
 Run tests with:
 
