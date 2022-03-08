@@ -91,5 +91,3 @@ const data = [
 
 - Easiest way is to upload to a Github repo, and share the url with us
 - Alternatively, you may zip all necessary files together and email it to us
-
-Public url for this exercise: [url](https://www.notion.so/Coding-Exercise-JS-Data-Manipulation-5bf2861c55564135a362a31c732aa527)
