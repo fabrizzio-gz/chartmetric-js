@@ -1,8 +1,10 @@
 import {
   fetchData,
   flattenTracks,
+  getTooltip,
   groupTracksByDate,
   sortTracks,
+  TrackPlayCountWithDate,
 } from "./script";
 
 describe("flatten tracks", () => {
@@ -145,6 +147,38 @@ describe("group tracks by date", () => {
     ["dummy data (3)", dummyDataThree, dummyGroupByDateThree],
   ])("returns expected result (%s)", (_string, input, expected) => {
     const result = groupTracksByDate(input);
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("get tooltip", () => {
+  const tracksByDate: Array<TrackPlayCountWithDate> = [
+    { timestp: "2021-04-07", trackPlayCount: { "Captain Hook": 1 } },
+    {
+      timestp: "2021-04-08",
+      trackPlayCount: { Peaches: 1, Savage: 3, "Captain Hook": 1 },
+    },
+    {
+      timestp: "2021-04-09",
+      trackPlayCount: {
+        Savage: 1,
+        "Savage (feat. Beyonce)": 1,
+        "Captain Hook": 1,
+      },
+    },
+  ];
+
+  const firstTooltip = "Captain Hook (1)";
+  const secondTooltip = "Peaches (1), Savage (3), Captain Hook (1)";
+  const thirdTooltip =
+    "Savage (1), Savage (feat. Beyonce) (1), Captain Hook (1)";
+
+  test.each([
+    ["test data (1)", tracksByDate[0].trackPlayCount, firstTooltip],
+    ["test data (2)", tracksByDate[1].trackPlayCount, secondTooltip],
+    ["test data (3)", tracksByDate[2].trackPlayCount, thirdTooltip],
+  ])("returns expected result (%s)", (_string, input, expected) => {
+    const result = getTooltip(input);
     expect(result).toEqual(expected);
   });
 });
