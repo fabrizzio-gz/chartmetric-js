@@ -1,4 +1,9 @@
-import { fetchData, flattenTracks, sortTracks } from "./script";
+import {
+  fetchData,
+  flattenTracks,
+  groupTracksByDate,
+  sortTracks,
+} from "./script";
 
 describe("flatten tracks", () => {
   const data = fetchData();
@@ -71,9 +76,75 @@ describe("sort tracks", () => {
     ["dummy data (2)", dummyTracks, sortedDummyTracks],
     ["dummy data (3)", dummyTracks, sortedDummyTracks],
     ["dummy data (reversed)", reversedDummyTracks, sortedDummyTracks],
-    ["same date data", repeatedDateTracks, repeatedDateSortedTracks],
+    ["repeated date data", repeatedDateTracks, repeatedDateSortedTracks],
   ])("returns expected result (%s)", (_string, input, expected) => {
     const result = sortTracks(input);
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("group tracks by date", () => {
+  const data = sortTracks(flattenTracks(fetchData()));
+  const tracksByDate = [
+    { timestp: "2021-04-07", trackPlayCount: { "Captain Hook": 1 } },
+    {
+      timestp: "2021-04-08",
+      trackPlayCount: { Peaches: 1, Savage: 3, "Captain Hook": 1 },
+    },
+    {
+      timestp: "2021-04-09",
+      trackPlayCount: {
+        Savage: 1,
+        "Savage (feat. Beyonce)": 1,
+        "Captain Hook": 1,
+      },
+    },
+  ];
+
+  const dummyData = [
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+  ];
+  const dummyGroupByDate = [
+    { timestp: "2000-01-01", trackPlayCount: { a: 6 } },
+  ];
+
+  const dummyDataTwo = [
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "b" },
+    { timestp: "2000-01-01", trackName: "b" },
+    { timestp: "2000-01-01", trackName: "c" },
+    { timestp: "2000-01-01", trackName: "c" },
+  ];
+  const dummyGroupByDateTwo = [
+    { timestp: "2000-01-01", trackPlayCount: { a: 2, b: 2, c: 2 } },
+  ];
+
+  const dummyDataThree = [
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "a" },
+    { timestp: "2000-01-01", trackName: "b" },
+    { timestp: "2000-01-02", trackName: "b" },
+    { timestp: "2000-01-02", trackName: "c" },
+    { timestp: "2000-01-02", trackName: "c" },
+  ];
+  const dummyGroupByDateThree = [
+    { timestp: "2000-01-01", trackPlayCount: { a: 2, b: 1 } },
+    { timestp: "2000-01-02", trackPlayCount: { b: 1, c: 2 } },
+  ];
+
+  test.each([
+    ["test data", data, tracksByDate],
+    ["dummy data (1)", dummyData, dummyGroupByDate],
+    ["dummy data (2)", dummyDataTwo, dummyGroupByDateTwo],
+    ["dummy data (3)", dummyDataThree, dummyGroupByDateThree],
+  ])("returns expected result (%s)", (_string, input, expected) => {
+    const result = groupTracksByDate(input);
     expect(result).toEqual(expected);
   });
 });
