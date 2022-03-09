@@ -52,3 +52,4 @@ $ npm run test
 ## Other exercises
 
 - [CSS exercise](https://github.com/fabrizzio-gz/chartmetric-css).
+- [SQL exercise](https://gist.github.com/fabrizzio-gz/cb04f316ddf2fb6f777ebd3d19445d97).
